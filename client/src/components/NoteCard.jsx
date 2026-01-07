@@ -16,7 +16,7 @@ const NoteCard = ({ note, onNoteDeleted, token }) => {
     setError("")
 
     try {
-      const response = await fetch(`http://localhost:5000/api/notes/${note._id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/notes/${note._id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       })

@@ -29,7 +29,7 @@ const Dashboard = () => {
     setError("")
 
     try {
-      const response = await fetch("http://localhost:5000/api/notes", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/notes`, {
         headers: { Authorization: `Bearer ${token}` },
       })
 
