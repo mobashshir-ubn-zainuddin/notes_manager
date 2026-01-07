@@ -1,3 +1,3 @@
 # Notes Management App
 
-Link: https://notes-manager-phi.vercel.app
+Link: https://notes-manager-jade.vercel.app/login
