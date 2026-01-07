@@ -6,7 +6,11 @@
 //    PORT=5000
 //    CLIENT_URL=http://localhost:3000
 
-require("dotenv").config()
+const path = require('path')
+require('dotenv').config({ path: path.resolve(__dirname, '..', '.env') })
+// Log whether critical env vars are present (do not print secrets)
+console.log('JWT_SECRET set:', !!process.env.JWT_SECRET)
+console.log('MONGODB_URI set:', !!process.env.MONGODB_URI)
 const express = require("express")
 const cors = require("cors")
 const connectDB = require("./config/db")
