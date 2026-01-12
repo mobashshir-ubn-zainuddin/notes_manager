@@ -70,24 +70,3 @@ admin: { type: Boolean, default: false }
 ```
 
 And a one-off script to seed an admin user which hashes the password before saving.
-
----
-
-## 🧪 Testing & Troubleshooting
-
-- If registration/login returns a 500 error, check the backend logs — they will print errors with `Register error:` or `Login error:`.
-- If MongoDB connection fails:
-  - Ensure `MONGODB_URI` is correct and the password is URL-encoded (special characters like `@` become `%40`).
-  - Make sure your Atlas cluster allows connections from your IP (or set 0.0.0.0/0 for dev).
-
-## 💡 Tips
-
-- Generate a secure `JWT_SECRET`:
-  - OpenSSL: `openssl rand -base64 32`
-  - Node: `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`
-
-- Add a ` .env.example` (without secrets) to the repo to document required env variables.
-
----
-
-If you'd like, I can add a ` .env.example` file and a short seed script to create an admin user securely. Want me to add those?
