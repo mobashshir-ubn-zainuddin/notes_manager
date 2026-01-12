@@ -9,7 +9,7 @@ import "../styles/dashboard.css"
 const Dashboard = () => {
   const [notes, setNotes] = useState([])
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState("")
+  const [error, setError] = useState("") 
   const navigate = useNavigate()
 
   const token = localStorage.getItem("token")
@@ -49,7 +49,7 @@ const Dashboard = () => {
     } catch (err) {
       setError(err.message)
       console.error(err)
-    } finally {
+    } finally {  
       setLoading(false)
     }
   }
@@ -60,6 +60,12 @@ const Dashboard = () => {
 
   const handleNoteDeleted = (noteId) => {
     setNotes(notes.filter((note) => note._id !== noteId))
+  }
+
+  const handleNoteUpdated = (updatedNote) => {
+    setNotes(notes.map((note) => 
+      note._id === updatedNote._id ? updatedNote : note
+    ))
   }
 
   const handleLogout = () => {
@@ -91,7 +97,7 @@ const Dashboard = () => {
           {loading ? (
             <div className="loading">Loading your notes...</div>
           ) : (
-            <NotesList notes={notes} onNoteDeleted={handleNoteDeleted} token={token} />
+            <NotesList notes={notes} onNoteDeleted={handleNoteDeleted} onNoteUpdated={handleNoteUpdated} token={token} />
           )}
         </section>
       </main>

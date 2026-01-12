@@ -6,7 +6,7 @@ import "../styles/components.css"
 const NoteForm = ({ onNoteAdded, token }) => {
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false) 
   const [error, setError] = useState("")
 
   const handleSubmit = async (e) => {
@@ -83,6 +83,6 @@ const NoteForm = ({ onNoteAdded, token }) => {
       </button>
     </form>
   )
-}
+}  
 
 export default NoteForm

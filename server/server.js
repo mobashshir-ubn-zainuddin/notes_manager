@@ -20,19 +20,51 @@ const notesRoutes = require("./routes/notes")
 const app = express()
 
 // Connect to MongoDB
-connectDB()
+connectDB() 
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: process.env.CLIENT_URL || 'http://localhost:3000',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
+
+// Request logging middleware
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`)
+  console.log('Headers:', req.headers)
+  next()
+})
 
 // Routes
 app.use("/api/auth", authRoutes)
 app.use("/api/notes", notesRoutes)
 
+// Debug: List all registered routes
+console.log('Registered routes:')
+app._router.stack.forEach((middleware, index) => {
+  if (middleware.route) {
+    console.log(`${index}: ${middleware.route.stack[0].method.toUpperCase()} ${middleware.route.path}`)
+  } else if (middleware.name === 'router') {
+    middleware.handle.stack.forEach((handler, handlerIndex) => {
+      if (handler.route) {
+        console.log(`${index}-${handlerIndex}: ${handler.route.stack[0].method.toUpperCase()} ${handler.route.path}`)
+      }
+    })
+  }
+})
+
 // Health Check
 app.get("/api/health", (req, res) => {
   res.json({ message: "Server is running." })
+})
+
+// Catch-all route for debugging
+app.use((req, res, next) => {
+  console.log(`Unhandled request: ${req.method} ${req.url}`)
+  console.log('Headers:', req.headers)
+  res.status(404).json({ message: `Route not found: ${req.method} ${req.url}` })
 })
 
 // Start Server
